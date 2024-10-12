@@ -39,4 +39,9 @@ public class SessionController {
     public String accessDenied() {
         return "403";
     }
+
+    @GetMapping("/home")
+    public String goHome(){
+        return "home";
+    }
 }

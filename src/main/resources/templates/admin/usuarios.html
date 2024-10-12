@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Usuarios</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 h-screen flex">
+
+<!-- Sidebar -->
+<div th:insert="fragments/admin.fragments :: adminSidebar(${usuario.getRol()})"></div>
+
+<!-- Main content -->
+<div class="flex-1 flex flex-col">
+    <!-- Header -->
+    <div th:insert="fragments/admin.fragments :: adminHeader(${usuario.getNombre()}, 'Usuarios')"></div>
+
+    <!-- Content -->
+    <main class="flex-1 p-6 bg-gray-50">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-semibold text-gray-700">Gestión de Usuarios</h2>
+            <!-- Botón para añadir un nuevo usuario -->
+            <a href="/admin/create-user" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg">
+                Añadir nuevo usuario
+            </a>
+        </div>
+
+        <!-- Mensaje de éxito -->
+        <p th:if="${message}" th:text="${message}" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative text-center mb-6">
+        </p>
+
+        <!-- Tabla de usuarios -->
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <table class="min-w-full bg-white">
+                <thead class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                <tr>
+                    <th class="py-3 px-6 text-left">Campos:</th>
+                    <th class="py-3 px-6 text-left">Nombre</th>
+                    <th class="py-3 px-6 text-left">Email</th>
+                    <th class="py-3 px-6 text-left">Rol</th>
+                    <th class="py-3 px-6 text-center">Acciones</th>
+                </tr>
+                </thead>
+                <tbody class="text-gray-600 text-sm font-light">
+                <!-- Iterar sobre los usuarios -->
+                <tr th:each="user : ${allUsers}" class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-6 text-left">Datos:</td>
+                    <td class="py-3 px-6 text-left" th:text="${user.nombre}">John Doe</td>
+                    <td class="py-3 px-6 text-left" th:text="${user.email}">johndoe@example.com</td>
+                    <td class="py-3 px-6 text-left" th:text="${user.rol}">ADMIN</td>
+                    <td class="py-3 px-6 text-center">
+                        <!-- Botón de Editar -->
+                        <a href="/admin/usuarios/editar" th:href="@{/admin/edit-user/{id}(id=${user.id})}"
+                           class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg mr-2">Editar</a>
+
+                        <!-- Botón de Eliminar (se puede usar un form POST) -->
+                        <form th:action="@{/admin/usuarios/eliminar/{id}(id=${user.id})}" method="post" class="inline-block">
+                            <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
+                                    onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?');">
+                                Eliminar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+</body>
+</html>

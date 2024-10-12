@@ -1,21 +1,42 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<h2>Please sign in</h2>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
 
-<p th:if="${message}" th:text="${message}"></p>
+<div class="bg-white shadow-lg rounded-lg p-8 max-w-sm w-full">
+    <h2 class="text-2xl font-semibold text-gray-700 mb-6 text-center">Please Sign In</h2>
 
-<form th:action="@{/login}" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username"/>
-    <br/>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password"/>
-    <br/>
-    <button type="submit">Sign In</button>
-</form>
+    <p th:if="${message}" th:text="${message}" class="text-red-500 text-sm mb-4 text-center"></p>
+
+    <form th:action="@{/login}" method="post" class="space-y-6">
+        <div>
+            <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+            <input type="text" id="username" name="username"
+                   class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-gray-200 focus:border-gray-500"
+                   required>
+        </div>
+
+        <div>
+            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+            <input type="password" id="password" name="password"
+                   class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-gray-200 focus:border-gray-500"
+                   required>
+        </div>
+
+        <div>
+            <button type="submit"
+                    class="w-full bg-gray-800 text-white py-2 rounded-lg shadow-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                Sign In
+            </button>
+        </div>
+    </form>
+
+</div>
+
 </body>
 </html>

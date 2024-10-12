@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Usuario - Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 h-screen flex">
+
+<!-- Sidebar -->
+<div th:insert="fragments/admin.fragments :: adminSidebar(${usuario.getRol()})"></div>
+
+<!-- Main content -->
+<div class="flex-1 flex flex-col">
+    <!-- Header -->
+    <div th:insert="fragments/admin.fragments :: adminHeader(${usuario.getNombre()}, 'Editar Usuario')"></div>
+
+    <!-- Content -->
+    <main class="flex-1 p-6 bg-gray-50">
+        <!-- Mensaje de error -->
+        <p th:if="${error}" th:text="${error}" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-center mb-4">
+        </p>
+
+        <div class="max-w-3xl mx-auto bg-white shadow-md rounded-lg p-8">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-6">Editar Usuario</h2>
+
+            <!-- Formulario de edición de usuario -->
+            <form th:action="@{/admin/edit-user/{id}(id=${userToEdit.id})}" th:object="${userToEdit}" method="post" class="space-y-6">
+                <!-- Campo de ID oculto -->
+                <input type="hidden" th:field="*{id}" />
+
+                <!-- Campo de Nombre -->
+                <div>
+                    <label for="nombre" class="block text-gray-700">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" th:field="*{nombre}" class="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                    <p th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-red-500 text-sm"></p>
+                </div>
+
+                <!-- Campo de Email -->
+                <div>
+                    <label for="email" class="block text-gray-700">Email</label>
+                    <input type="email" id="email" name="email" th:field="*{email}" class="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-red-500 text-sm"></p>
+                </div>
+
+                <!-- Campo de Contraseña (opcional) -->
+                <div>
+                    <label for="password" class="block text-gray-700">Contraseña</label>
+                    <input type="password" id="password" name="password" th:field="*{password}" placeholder="Deja en blanco para mantener la contraseña actual" class="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-red-500 text-sm"></p>
+                </div>
+
+                <!-- Campo de Rol -->
+                <div>
+                    <label for="rol" class="block text-gray-700">Rol</label>
+                    <select id="rol" name="rol" th:field="*{rol}" class="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                        <option value="ADMIN">Admin</option>
+                        <option value="EMPLOYEE">Empleado</option>
+                        <option value="ATHLETE">Deportista</option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('rol')}" th:errors="*{rol}" class="text-red-500 text-sm"></p>
+                </div>
+
+                <div class="flex justify-end">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg">
+                        Actualizar Usuario
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+
+</body>
+</html>

@@ -1,12 +1,27 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<h2>lol</h2>
-<form th:action="@{/logout}" method="post">
-    <button type="submit">Logout</button>
-</form>
+<body class="bg-gray-100 h-screen flex">
+
+<!-- Sidebar -->
+<div th:insert="fragments/admin.fragments :: adminSidebar(${usuario.getRol()})"></div>
+
+<!-- Main content -->
+<div class="flex-1 flex flex-col">
+    <!-- Header -->
+    <div th:insert="fragments/admin.fragments :: adminHeader(${usuario.getNombre()}, 'Inicio')"></div>
+
+    <!-- Content -->
+    <main class="flex-1 p-6 bg-gray-50">
+        <h2 class="text-2xl font-semibold text-gray-700">Bienvenido al panel de administración</h2>
+    </main>
+</div>
+
+
 </body>
 </html>
