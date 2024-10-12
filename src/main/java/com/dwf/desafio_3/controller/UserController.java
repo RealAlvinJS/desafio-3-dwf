@@ -8,12 +8,4 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class UserController {
-    @Autowired
-    private UserService service;
-
-    @GetMapping("/users")
-    public String listUsers(Model model){
-        model.addAttribute("users", service.ListAllUsers());
-        return "users";
-    }
 }
